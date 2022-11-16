@@ -1,0 +1,23 @@
+ARG platform
+FROM --platform=${platform} debian:stable
+
+ENV TZ="Asia/Shanghai"
+
+COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN export DEBIAN_FRONTEND="noninteractive" && \
+	apt update && apt install -y ca-certificates tzdata && \
+	update-ca-certificates && \
+	ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && \
+	dpkg-reconfigure tzdata && \
+	chmod +x /entrypoint.sh
+
+WORKDIR /opt/PortForwardGoPanel
+COPY resources /opt/PortForwardGoPanel/resources
+COPY install /opt/PortForwardGoPanel/install
+COPY PortForwardGoPanel /opt/PortForwardGoPanel/PortForwardGoPanel
+
+VOLUME ["/data/"]
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/opt/PortForwardGoPanel/PortForwardGoPanel","--config","/data/config.json"]

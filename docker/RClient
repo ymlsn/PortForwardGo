@@ -1,0 +1,18 @@
+ARG platform
+FROM --platform=${platform} debian:stable
+
+ENV TZ="Asia/Shanghai"
+
+COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN export DEBIAN_FRONTEND="noninteractive" && \
+	apt update && apt install -y ca-certificates tzdata && \
+	update-ca-certificates && \
+	ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && \
+	dpkg-reconfigure tzdata && \
+	chmod +x /entrypoint.sh
+
+COPY RClient /usr/bin/RClient
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["RClient"]
