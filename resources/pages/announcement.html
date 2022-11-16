@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title>转发管理</title>
+  <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/css/mdui.min.css" />
+  <link rel="stylesheet" href="/src/global.css" />
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/js/mdui.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/marked/4.0.2/marked.min.js"></script>
+</head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-accent-pink mdui-loaded mdui-drawer-body-left">
+  <header class="appbar mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+      <button mdui-drawer="{target: '#main-drawer'}" class="mdui-btn mdui-btn-icon">
+        <i class="mdui-icon material-icons">menu</i>
+      </button>
+      <span class="mdui-typo-headline mdui-hidden-xs">转发公告</span>
+      <div class="mdui-toolbar-spacer"></div>
+      <span id="change_theme" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '切换主题'}">
+        <i class="mdui-icon material-icons">brightness_4</i>
+      </span>
+    </div>
+  </header>
+
+  <div id="loading" class="mdui-container mdui-typo mdui-valign" style="height: 100%;">
+    <div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>
+  </div>
+
+  <div id="view" class="mdui-container mdui-p-t-1" style="display: none;">
+    <div id="error" style="display: none;"></div>
+
+    <div id="view_announcement" style="display: none;">
+      <h1 id="title" class="title mdui-text-color-theme"></h1>
+      <div>编辑于 <a id="edit_at"></a></div>
+      <div id="content" class="intro mdui-typo">
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="/src/theme.js"></script>
+<script src="/src/core.js"></script>
+<script src="/src/announcement.js"></script>
+<script src="/src/foot.js"></script>
+
+</html>

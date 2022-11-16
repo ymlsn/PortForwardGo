@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title>转发管理</title>
+  <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/css/mdui.min.css" />
+  <link rel="stylesheet" href="/src/global.css" />
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/js/mdui.min.js"></script>
+</head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-accent-pink mdui-loaded mdui-drawer-body-left">
+  <header class="appbar mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+      <button mdui-drawer="{target: '#main-drawer'}" class="mdui-btn mdui-btn-icon">
+        <i class="mdui-icon material-icons">menu</i>
+      </button>
+      <span class="mdui-typo-headline mdui-hidden-xs">转发管理</span>
+      <div class="mdui-toolbar-spacer"></div>
+      <span id="change_theme" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '切换主题'}">
+        <i class="mdui-icon material-icons">brightness_4</i>
+      </span>
+      <span class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '注销'}">
+        <i id="logout" class="mdui-icon material-icons">exit_to_app</i>
+      </span>
+    </div>
+  </header>
+
+  <div class="mdui-drawer mdui-shadow-4" id="main-drawer">
+    <div class="mdui-list" mdui-collapse="{accordion: true}">
+      <a href="/" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">info_outline</i>
+        <div class="mdui-list-item-content">概览</div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">language</i>
+          <div class="mdui-list-item-content">转发管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/forward_rules" class="mdui-list-item mdui-ripple">转发规则</li>
+          <li href="/nat_forward_rules" class="mdui-list-item mdui-ripple">内网穿透</li>
+        </div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">devices</i>
+          <div class="mdui-list-item-content">设备管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/tunnel_devices" class="mdui-list-item mdui-ripple">单端隧道</li>
+          <li href="/nat_forward_devices" class="mdui-list-item mdui-ripple">内网穿透</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a href="/announcements" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">library_books</i>
+        <div class="mdui-list-item-content">公告</div>
+      </a>
+
+      <a href="/status" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">storage</i>
+        <div class="mdui-list-item-content">状态</div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">shopping_cart</i>
+          <div class="mdui-list-item-content">商店</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/plan" class="mdui-list-item mdui-ripple">我的套餐</li>
+          <li href="/cart" class="mdui-list-item mdui-ripple">购买套餐</li>
+        </div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">book</i>
+          <div class="mdui-list-item-content">帮助</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/help" class="mdui-list-item mdui-ripple">教程</li>
+          <li href="/documents" class="mdui-list-item mdui-ripple">文档</li>
+          <li href="/looking-glass" class="mdui-list-item mdui-ripple">Looking Glass</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a href="/user" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">account_circle</i>
+        <div class="mdui-list-item-content">用户信息</div>
+      </a>
+
+      <a class="mdui-collapse-item mdui-collapse-item-open">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">build</i>
+          <div class="mdui-list-item-content">管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/admin/users" class="mdui-list-item mdui-ripple">用户</li>
+          <li href="/admin/rules" class="mdui-list-item mdui-ripple">转发规则</li>
+          <li href="/admin/nat_rules" class="mdui-list-item mdui-ripple mdui-list-item-active">内网穿透</li>
+          <li href="/admin/nodes" class="mdui-list-item mdui-ripple">节点</li>
+          <li href="/admin/plans" class="mdui-list-item mdui-ripple">套餐</li>
+          <li href="/admin/permissions" class="mdui-list-item mdui-ripple">权限</li>
+          <li class="mdui-divider"></li>
+          <li href="/admin/announcements" class="mdui-list-item mdui-ripple">公告</li>
+          <li href="/admin/settings" class="mdui-list-item mdui-ripple">设置</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a class="mdui-list-item" mdui-drawer-close>
+        <i class="mdui-list-item-icon mdui-icon material-icons">chevron_left</i>
+        <div class="mdui-list-item-content">收起菜单</div>
+      </a>
+    </div>
+  </div>
+
+  <div id="loading" class="mdui-container mdui-typo mdui-valign" style="height: 100%;">
+    <div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>
+  </div>
+
+  <div id="view" class="mdui-container mdui-p-t-3" style="display: none;">
+    <div>
+      <div>
+        <div class="mdui-float-left">
+          节点
+          <select id="node-select" class="mdui-select">
+            <option value="0">全部</option>
+          </select>
+        </div>
+
+        <div class="mdui-col-xs-10 mdui-col-sm-3">
+          <div class="mdui-textfield mdui-textfield-expandable">
+            <button class="mdui-textfield-icon mdui-btn mdui-btn-icon">
+              <i class="mdui-icon material-icons">search</i>
+            </button>
+            <input id="search" class="mdui-textfield-input" type="text" placeholder="搜索">
+            <button class="mdui-textfield-close mdui-btn mdui-btn-icon">
+              <i class="mdui-icon material-icons">close</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdui-table-fluid">
+      <table id="rule_table" class="mdui-table mdui-table-hoverable mdui-table-selectable">
+        <caption></caption>
+        <colgroup>
+          <col width="1%">
+          <col width="1%">
+          <col width="1%">
+          <col width="8%">
+          <col width="8%">
+          <col width="10%">
+          <col width="8%">
+          <col width="8%">
+          <col width="20%">
+        </colgroup>
+
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>用户</th>
+            <th>节点</th>
+            <th>监听端口</th>
+            <th>内网地址</th>
+            <th>协议</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+
+        <tbody id="rule_list">
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 15px;">
+      <button id="delete_checked" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme"><i
+          class="mdui-icon material-icons">delete</i>批量删除</button>
+    </div>
+
+    <div id="infoRule" class="mdui-dialog">
+      <div class="mdui-dialog-title">详细信息 <small class="mdui-text-color-grey">#<em id="info_id"></em></small></div>
+      <div class="mdui-dialog-content">
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+          <li class="mdui-list-item">
+            名称
+            <div id="info_name" class="mdui-list-item"></div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item">
+            节点
+            <div id="info_node" class="mdui-list-item"></div>
+          </li>
+
+          <li class="mdui-list-item">
+            节点地址
+            <div id="info_node_addr" class="mdui-list-item"></div>
+          </li>
+
+          <li class="mdui-list-item">
+            协议
+            <div id="info_protocol" class="mdui-list-item"></div>
+          </li>
+
+          <li class="mdui-list-item">
+            <a id="tag_info_bind">监听端口</a>
+            <div id="info_bind" class="mdui-list-item"></div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item">
+            内网地址
+            <div id="info_target" class="mdui-list-item"></div>
+          </li>
+
+          <li class="mdui-list-item">
+            代理协议 (Proxy Protocol)
+            <div id="info_proxy" class="mdui-list-item"></div>
+          </li>
+
+          <li class="mdui-list-item">
+            内网设备
+            <div id="info_dest" class="mdui-list-item"></div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item">
+            配置项
+            <div id="info_conf" class="mdui-list-item"></div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item" id="info_close">
+            <i class="mdui-list-item-icon mdui-icon material-icons">close</i>
+            <div class="mdui-list-item">关闭</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="editRule" class="mdui-dialog">
+      <div class="mdui-dialog-title">编辑规则 <small class="mdui-text-color-grey">#<em id="edit_id"></em></small>
+      </div>
+      <div class="mdui-dialog-content">
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+          <li class="mdui-list-item">
+            名称
+            <div class="mdui-list-item mdui-textfield">
+              <input id="edit_name" class="mdui-textfield-input" type="text" />
+            </div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item">
+            内网地址
+            <div class="mdui-list-item mdui-textfield">
+              <input id="edit_target_host" class="mdui-textfield-input" type="text" placeholder="127.0.0.1" />
+            </div>
+            <div class="mdui-list-item mdui-textfield">
+              <input id="edit_target_port" class="mdui-textfield-input" type="number" min="1" max="65535"
+                placeholder="8080" />
+            </div>
+          </li>
+
+          <li id="tag_edit_proxyprotocol" class="mdui-list-item">
+            代理协议 (Proxy Protocol)
+            <div class="mdui-list-item">
+              <select id="edit_proxyprotocol" class="mdui-select mdui-color-transparent">
+                <option value="0">关闭 (推荐)</option>
+                <option value="1">v1</option>
+                <option value="2">v2</option>
+              </select>
+            </div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-collapse-item">
+            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+              <div class="mdui-list-item-content">配置项</div>
+              <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+
+            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+              <div id="tag_edit_conf"></div>
+
+              <li class="mdui-list-item">
+                <div class="mdui-list-item mdui-textfield">
+                  <input id="edit_conf_name" class="mdui-textfield-input" type="text" />
+                </div>
+
+                <button id="edit_conf"
+                  class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-shadow-4 mdui-color-theme mdui-ripple">
+                  <i class="mdui-list-item-icon mdui-icon material-icons">add</i>
+                </button>
+              </li>
+            </ul>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item" id="edit_enter">
+            <i class="mdui-list-item-icon mdui-icon material-icons">check</i>
+            <div class="mdui-list-item">确认</div>
+          </li>
+
+          <li class="mdui-list-item" id="edit_cancel">
+            <i class="mdui-list-item-icon mdui-icon material-icons">close</i>
+            <div class="mdui-list-item">取消</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="debugRule" class="mdui-dialog">
+      <div class="mdui-dialog-title">诊断 <small class="mdui-text-color-grey">#<em id="debug_id"></em></small></div>
+      <div class="mdui-dialog-content">
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+          <li class="mdui-list-item">
+            入口节点反馈
+            <div id="debug_inbound" class="mdui-list-item"></div>
+          </li>
+
+          <div class="mdui-divider"></div>
+
+          <li class="mdui-list-item" id="debug_close">
+            <i class="mdui-list-item-icon mdui-icon material-icons">close</i>
+            <div class="mdui-list-item">关闭</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="/src/theme.js"></script>
+  <script src="/src/core.js"></script>
+  <script src="/src/logout.js"></script>
+  <script src="/src/admin/nat_forward_rules.js"></script>
+  <script src="/src/foot.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title>转发管理</title>
+  <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/css/mdui.min.css" />
+  <link rel="stylesheet" href="/src/global.css" />
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/js/mdui.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/vue/2.6.14/vue.min.js"></script>
+</head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-accent-pink mdui-loaded mdui-drawer-body-left">
+  <header class="appbar mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+      <button mdui-drawer="{target: '#main-drawer'}" class="mdui-btn mdui-btn-icon">
+        <i class="mdui-icon material-icons">menu</i>
+      </button>
+      <span class="mdui-typo-headline mdui-hidden-xs">转发管理</span>
+      <div class="mdui-toolbar-spacer"></div>
+      <span id="change_theme" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '切换主题'}">
+        <i class="mdui-icon material-icons">brightness_4</i>
+      </span>
+      <span class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '注销'}">
+        <i id="logout" class="mdui-icon material-icons">exit_to_app</i>
+      </span>
+    </div>
+  </header>
+
+  <div class="mdui-drawer mdui-shadow-4" id="main-drawer">
+    <div class="mdui-list" mdui-collapse="{accordion: true}">
+      <a href="/" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">info_outline</i>
+        <div class="mdui-list-item-content">概览</div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">language</i>
+          <div class="mdui-list-item-content">转发管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/forward_rules" class="mdui-list-item mdui-ripple">转发规则</li>
+          <li href="/nat_forward_rules" class="mdui-list-item mdui-ripple">内网穿透</li>
+        </div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">devices</i>
+          <div class="mdui-list-item-content">设备管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/tunnel_devices" class="mdui-list-item mdui-ripple">单端隧道</li>
+          <li href="/nat_forward_devices" class="mdui-list-item mdui-ripple">内网穿透</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a href="/announcements" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">library_books</i>
+        <div class="mdui-list-item-content">公告</div>
+      </a>
+
+      <a href="/status" class="mdui-list-item mdui-list-item-active">
+        <i class="mdui-list-item-icon mdui-icon material-icons">storage</i>
+        <div class="mdui-list-item-content">状态</div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">shopping_cart</i>
+          <div class="mdui-list-item-content">商店</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/invoices" class="mdui-list-item mdui-ripple">账单</li>
+          <li href="/plan" class="mdui-list-item mdui-ripple">我的套餐</li>
+          <li href="/cart" class="mdui-list-item mdui-ripple">购买套餐</li>
+        </div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">book</i>
+          <div class="mdui-list-item-content">帮助</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/help" class="mdui-list-item mdui-ripple">教程</li>
+          <li href="/documents" class="mdui-list-item mdui-ripple">文档</li>
+          <li href="/looking-glass" class="mdui-list-item mdui-ripple">Looking Glass</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a href="/user" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">account_circle</i>
+        <div class="mdui-list-item-content">用户信息</div>
+      </a>
+
+      <a id="admin_banner" class="mdui-collapse-item" style="display: none;">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">build</i>
+          <div class="mdui-list-item-content">管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/admin/users" class="mdui-list-item mdui-ripple">用户</li>
+          <li href="/admin/rules" class="mdui-list-item mdui-ripple">转发规则</li>
+          <li href="/admin/nat_rules" class="mdui-list-item mdui-ripple">内网穿透</li>
+          <li href="/admin/nodes" class="mdui-list-item mdui-ripple">节点</li>
+          <li href="/admin/plans" class="mdui-list-item mdui-ripple">套餐</li>
+          <li href="/admin/permissions" class="mdui-list-item mdui-ripple">权限</li>
+          <li class="mdui-divider"></li>
+          <li href="/admin/invoices" class="mdui-list-item mdui-ripple">账单</li>
+          <li href="/admin/announcements" class="mdui-list-item mdui-ripple">公告</li>
+          <li href="/admin/settings" class="mdui-list-item mdui-ripple">设置</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a class="mdui-list-item" mdui-drawer-close>
+        <i class="mdui-list-item-icon mdui-icon material-icons">chevron_left</i>
+        <div class="mdui-list-item-content">收起菜单</div>
+      </a>
+    </div>
+  </div>
+
+  <div id="loading" class="mdui-container mdui-typo mdui-valign" style="height: 100%;">
+    <div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>
+  </div>
+
+  <div id="view" class="mdui-container" style="display: none;">
+    <ul class="mdui-list" mdui-collapse="{accordion: true}" v-for="(node, nodeid) in nodes" :key="nodeid" :id="nodeid">
+      <li class="mdui-collapse-item mdui-collapse-item-open">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple" :id="'info_' + nodeid">
+          <i class="mdui-list-item-icon mdui-icon material-icons">storage</i>
+          <div class="mdui-list-item-content">
+            {{ node.name }}
+            <small class="mdui-text-color-grey">#{{ nodeid }}</small>
+          </div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <div class="mdui-table-fluid" v-if="node.servers.length > 0">
+            <table class="mdui-table mdui-table-hoverable">
+              <thead>
+                <tr>
+                  <th class="mdui-text-center"></th>
+                  <th class="mdui-text-center">上行</th>
+                  <th class="mdui-text-center">下行</th>
+                  <th class="mdui-text-center">CPU</th>
+                  <th class="mdui-text-center">内存</th>
+                  <th class="mdui-text-center">Swap</th>
+                  <th class="mdui-text-center">储存</th>
+                  <th class="mdui-text-center">在线时间</th>
+                  <th v-if="is_admin" class="mdui-text-center">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-if="server.live" v-for="server in node.servers" :id="nodeid + '-' + server.SessionId">
+                  <td :id="'info-' + nodeid + '-' + server.SessionId">
+                    <div class="mdui-valign">
+                      <img v-if="server.Host.CountryCode" class="mdui-img-circle mdui-valign"
+                        :src="'https://cdn.staticfile.org/flag-icon-css/4.1.5/flags/1x1/' + server.Host.CountryCode + '.svg'"
+                        style="height: 24px" />
+                      <a v-if="server.Host.IP">&nbsp;&nbsp;&nbsp;</a>
+                      {{ server.Host.IP }}
+                    </div>
+                  </td>
+                  <td :id="'up-' + nodeid + '-' + server.SessionId" class="mdui-text-center">
+                    <at>{{ formatNetByteSize(server.State.NetOutSpeed) }}</at>
+                  </td>
+                  <td :id="'down-' + nodeid + '-' + server.SessionId"  class="mdui-text-center">
+                    <st>{{ formatNetByteSize(server.State.NetInSpeed) }}</st>
+                  </td>
+                  <td class="progress">
+                    <div :id="'cpu-' + nodeid + '-' + server.SessionId" class="mdui-progress"
+                      style="height: 30px; background-color: #edbbd2;">
+                      <div class="mdui-progress-determinate mdui-color-pink-a400"
+                        :style="'width: ' + (server.live?server.State.CPU:'0') + '%;'">
+                        <span class="mdui-text-truncate progress-text">{{ parseInt(server.State.CPU) }}%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="progress">
+                    <div :id="'mem-' + nodeid + '-' + server.SessionId" class="mdui-progress" style="height: 30px;">
+                      <div class="mdui-progress-determinate mdui-color-indigo-400"
+                        :style="'width: ' + parseInt(server.State?server.State.MemUsed/server.Host.MemTotal*100:0) + '%;'">
+                        <span class="mdui-text-truncate  progress-text">{{
+                          parseInt(server.State?server.State.MemUsed/server.Host.MemTotal*100:0) }}%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="progress">
+                    <div :id="'swap-' + nodeid + '-' + server.SessionId" class="mdui-progress" style="height: 30px;">
+                      <div class="mdui-progress-determinate mdui-color-indigo-400"
+                        :style="'width: ' + parseInt(server.Host.SwapTotal>0&&server.State?server.State.SwapUsed/server.Host.SwapTotal*100:0) + '%;'">
+                        <span class="mdui-text-truncate  progress-text">{{
+                          parseInt(server.State?server.State.SwapUsed/server.Host.SwapTotal*100:0) }}%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="progress">
+                    <div :id="'disk-' + nodeid + '-' + server.SessionId" class="mdui-progress" style="height: 30px;">
+                      <div class="mdui-progress-determinate mdui-color-indigo-400"
+                        :style="'width: ' + parseInt(server.State?server.State.DiskUsed/server.Host.DiskTotal*100:0) + '%;'">
+                        <span class="mdui-text-truncate  progress-text">{{
+                          parseInt(server.State?server.State.DiskUsed/server.Host.DiskTotal*100:0) }}%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td :id="'uptime-' + nodeid + '-' + server.SessionId" class="mdui-text-center">{{
+                    secondToDate(server.State.Uptime) }}</td>
+                  <td class="mdui-text-center" v-if="is_admin">
+                    <div mdui-tooltip="{content: '终端'}">
+                      <button @click="openTerminal(nodeid, server.SessionId)"
+                        class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-shadow-4 mdui-color-theme mdui-ripple">
+                        <i class="mdui-icon material-icons">computer</i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mdui-text-center" v-else>
+            无在线服务器
+          </div>
+        </ul>
+      </li>
+      <div class="mdui-divider"></div>
+    </ul>
+  </div>
+
+  <script src="src/theme.js"></script>
+  <script src="src/core.js"></script>
+  <script src="src/logout.js"></script>
+  <script src="src/status.js"></script>
+  <script src="src/foot.js"></script>
+  <style>
+    .progress {
+      width: 10%;
+      min-width: 150px;
+    }
+
+    .progress-text {
+      font-size: 16px;
+      position: relative;
+      top: 4px;
+      left: 6px;
+    }
+  </style>
+</body>
+
+</html>

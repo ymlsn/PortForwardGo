@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title>转发管理</title>
+  <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/css/mdui.min.css" />
+  <link rel="stylesheet" href="/src/global.css" />
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/mdui/1.0.2/js/mdui.min.js"></script>
+</head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-accent-pink mdui-loaded mdui-drawer-body-left">
+  <header class="appbar mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+      <button mdui-drawer="{target: '#main-drawer'}" class="mdui-btn mdui-btn-icon">
+        <i class="mdui-icon material-icons">menu</i>
+      </button>
+      <span class="mdui-typo-headline mdui-hidden-xs">转发管理</span>
+      <div class="mdui-toolbar-spacer"></div>
+      <span id="change_theme" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '切换主题'}">
+        <i class="mdui-icon material-icons">brightness_4</i>
+      </span>
+      <span class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '注销'}">
+        <i id="logout" class="mdui-icon material-icons">exit_to_app</i>
+      </span>
+    </div>
+  </header>
+
+  <div class="mdui-drawer mdui-shadow-4" id="main-drawer">
+    <div class="mdui-list" mdui-collapse="{accordion: true}">
+      <a href="/" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">info_outline</i>
+        <div class="mdui-list-item-content">概览</div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">language</i>
+          <div class="mdui-list-item-content">转发管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/forward_rules" class="mdui-list-item mdui-ripple">转发规则</li>
+          <li href="/nat_forward_rules" class="mdui-list-item mdui-ripple">内网穿透</li>
+        </div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">devices</i>
+          <div class="mdui-list-item-content">设备管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/tunnel_devices" class="mdui-list-item mdui-ripple">单端隧道</li>
+          <li href="/nat_forward_devices" class="mdui-list-item mdui-ripple">内网穿透</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a href="/announcements" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">library_books</i>
+        <div class="mdui-list-item-content">公告</div>
+      </a>
+
+      <a href="/status" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">storage</i>
+        <div class="mdui-list-item-content">状态</div>
+      </a>
+
+      <a class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">shopping_cart</i>
+          <div class="mdui-list-item-content">商店</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/invoices" class="mdui-list-item mdui-ripple">账单</li>
+          <li href="/plan" class="mdui-list-item mdui-ripple">我的套餐</li>
+          <li href="/cart" class="mdui-list-item mdui-ripple">购买套餐</li>
+        </div>
+      </a>
+
+      <a class="mdui-collapse-item mdui-collapse-item-open">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">book</i>
+          <div class="mdui-list-item-content">帮助</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/help" class="mdui-list-item mdui-ripple">教程</li>
+          <li href="/documents" class="mdui-list-item mdui-ripple">文档</li>
+          <li href="/looking-glass" class="mdui-list-item mdui-ripple mdui-list-item-active">Looking Glass</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a href="/user" class="mdui-list-item">
+        <i class="mdui-list-item-icon mdui-icon material-icons">account_circle</i>
+        <div class="mdui-list-item-content">用户信息</div>
+      </a>
+
+      <a id="admin_banner" class="mdui-collapse-item" style="display: none;">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+          <i class="mdui-list-item-icon mdui-icon material-icons">build</i>
+          <div class="mdui-list-item-content">管理</div>
+          <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+
+        <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li href="/admin/users" class="mdui-list-item mdui-ripple">用户</li>
+          <li href="/admin/rules" class="mdui-list-item mdui-ripple">转发规则</li>
+          <li href="/admin/nat_rules" class="mdui-list-item mdui-ripple">内网穿透</li>
+          <li href="/admin/nodes" class="mdui-list-item mdui-ripple">节点</li>
+          <li href="/admin/plans" class="mdui-list-item mdui-ripple">套餐</li>
+          <li href="/admin/permissions" class="mdui-list-item mdui-ripple">权限</li>
+          <li class="mdui-divider"></li>
+          <li href="/admin/invoices" class="mdui-list-item mdui-ripple">账单</li>
+          <li href="/admin/announcements" class="mdui-list-item mdui-ripple">公告</li>
+          <li href="/admin/settings" class="mdui-list-item mdui-ripple">设置</li>
+        </div>
+      </a>
+
+      <div class="mdui-divider"></div>
+
+      <a class="mdui-list-item" mdui-drawer-close>
+        <i class="mdui-list-item-icon mdui-icon material-icons">chevron_left</i>
+        <div class="mdui-list-item-content">收起菜单</div>
+      </a>
+    </div>
+  </div>
+
+  <div id="loading" class="mdui-container mdui-typo mdui-valign" style="height: 100%;">
+    <div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>
+  </div>
+
+  <div id="view" class="mdui-container mdui-p-t-1" style="display: none;">
+    <div class="mdui-row mdui-row-sm-10">
+
+      <div class="mdui-col-sm-3 mdui-textfield">
+        <label class="mdui-textfield-label">节点</label>
+        <select id="node" class="mdui-select">
+          <option value="0">请选择</option>
+        </select>
+      </div>
+
+      <div class="mdui-col-sm-3 mdui-textfield">
+        <label class="mdui-textfield-label">出口</label>
+        <select id="outbound" class="mdui-select" disabled>
+          <option value>系统默认</option>
+        </select>
+      </div>
+
+      <div class="mdui-col-sm-1 mdui-textfield">
+        <label class="mdui-textfield-label">测试工具</label>
+        <select id="tool" class="mdui-select" disabled>
+          <option value="ping">Ping</option>
+          <option value="tcping">TCPing</option>
+          <option value="mtr">MTR</option>
+          <option value="iperf3">IPerf3</option>
+        </select>
+      </div>
+
+      <div class="mdui-textfield mdui-col-sm-2">
+        <label class="mdui-textfield-label">目标地址</label>
+        <input id="host" class="mdui-textfield-input" type="text" placeholder="example.com" disabled />
+      </div>
+
+      <div id="div_port" class="mdui-textfield mdui-col-sm-1" style="display: none;">
+        <label class="mdui-textfield-label">端口</label>
+        <input id="port" class="mdui-textfield-input" type="number" min="1" max="65535" placeholder="8888" disabled />
+      </div>
+
+      <div class="mdui-col-sm-1" style="padding-top: 30px;">
+        <button id="start" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-shadow-4 mdui-color-theme mdui-ripple"
+          disabled>
+          <i class="mdui-icon material-icons">check</i>
+        </button>
+      </div>
+    </div>
+
+    <div id="div_iperf3" class="mdui-row mdui-row-sm-10" style="display: none;">
+      <div class="mdui-textfield mdui-col-sm-1">
+        <label class="mdui-textfield-label">线程数</label>
+        <input id="parallel" class="mdui-textfield-input" type="number" min="1" max="65535" placeholder="1" disabled />
+      </div>
+
+      <div class="mdui-textfield mdui-col-sm-1">
+        <label class="mdui-textfield-label">接收模式</label>
+        <label class="mdui-switch">
+          <input id="reverse" type="checkbox" disabled />
+          <i class="mdui-switch-icon"></i>
+        </label>
+      </div>
+
+      <div class="mdui-textfield mdui-col-sm-1">
+        <label class="mdui-textfield-label">UDP</label>
+        <label class="mdui-switch">
+          <input id="udp" type="checkbox" disabled />
+          <i class="mdui-switch-icon"></i>
+        </label>
+      </div>
+
+      <div class="mdui-textfield mdui-col-sm-1">
+        <label class="mdui-textfield-label">IPv6</label>
+        <label class="mdui-switch">
+          <input id="ipv6" type="checkbox" disabled />
+          <i class="mdui-switch-icon"></i>
+        </label>
+      </div>
+    </div>
+
+    <br>
+
+    <div id="progress" class="mdui-progress" hidden>
+      <div class="mdui-progress-indeterminate"></div>
+    </div>
+
+    <br>
+
+    <div style="overflow-x: auto; overflow-y: auto;">
+      <pre id="result" hidden></pre>
+
+      <table class="mdui-table mdui-table-hoverable" id="mtr-table" hidden>
+        <thead>
+          <tr>
+            <th>Hop</th>
+            <th>Host</th>
+            <th>ASN</th>
+            <th>Loss</th>
+            <th>Sent</th>
+            <th>Last</th>
+            <th>Avg</th>
+            <th>Best</th>
+            <th>Worst</th>
+          </tr>
+        </thead>
+
+        <tbody id="mtr-table-body">
+        </tbody>
+      </table>
+    
+      <table class="mdui-table mdui-table-hoverable" id="iperf3-table" hidden>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Interval</th>
+            <th>Transfer</th>
+            <th>Bitrate</th>
+            <th>Retr</th>
+            <th>Cwnd</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody id="iperf3-table-body">
+        </tbody>
+      </table>
+
+      <table class="mdui-table mdui-table-hoverable" id="iperf3-udp-table" hidden>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Interval</th>
+            <th>Transfer</th>
+            <th>Bitrate</th>
+            <th>Jitter</th>
+            <th>Lost/Total Datagrams</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody id="iperf3-udp-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <style>
+    pre {
+      display: block;
+      padding: 9.5px;
+      margin: 0 0 10px;
+      font-size: 13px;
+      line-height: 1.42857143;
+      color: #333;
+      word-break: break-all;
+      word-wrap: break-word;
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: auto;
+    }
+  </style>
+  <script src="src/theme.js"></script>
+  <script src="src/core.js"></script>
+  <script src="src/logout.js"></script>
+  <script src="src/looking-glass.js"></script>
+  <script src="src/foot.js"></script>
+</body>
+
+</html>

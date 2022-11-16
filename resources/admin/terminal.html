@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终端 | Terminal </title>
+    <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/xterm/4.11.0/xterm.css" type="text/css"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/src/global.css" />
+</head>
+
+<style>
+    html,
+    body,
+    #terminal-container {
+        padding: unset;
+        margin: unset;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    body {
+        background-color: black;
+    }
+</style>
+
+<body onresize="onResize()">
+    <div id="terminal-container"></div>
+    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/xterm/4.11.0/xterm.js"
+        type="application/javascript"></script>
+    <script
+        src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/xterm/4.11.0/addons/attach/xterm-addon-attach.js"></script>
+    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-d/xterm/4.11.0/addons/fit/xterm-addon-fit.js"></script>
+    <script>
+        let sendResizing = false;
+
+        function doResize() {
+            fitAddon.fit()
+            const w = fitAddon.proposeDimensions();
+            const resizeMessage = new TextEncoder().encode(JSON.stringify({
+                Rows: w.rows,
+                Cols: w.cols,
+            }));
+
+            var msg = new Int8Array(resizeMessage.length);
+            msg.set(resizeMessage);
+
+            socket.send(msg)
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function onResize() {
+            if (sendResizing) return;
+            sendResizing = true;
+            try {
+                await sleep(1500);
+                doResize();
+            } catch (error) {
+                console.log('resize', error);
+            } finally {
+                sendResizing = false
+            }
+        }
+
+        const term = new Terminal({
+            screenKeys: true,
+            useStyle: true,
+            cursorBlink: true,
+        });
+
+        const socket = new WebSocket(window.location.href.replace("http", "ws"));
+        const attachAddon = new AttachAddon.AttachAddon(socket);
+        const fitAddon = new FitAddon.FitAddon();
+        term.loadAddon(attachAddon);
+        term.loadAddon(fitAddon);
+        term.open(document.getElementById('terminal-container'));
+
+        socket.onopen = () => {
+            onResize()
+        }
+
+        socket.onclose = () => {
+            setTimeout(function () {
+                alert('连接断开')
+                window.close()
+            }, 1000)
+        }
+
+        socket.onerror = () => {
+            alert('连接出错')
+        }
+    </script>
+</body>
+
+</html>

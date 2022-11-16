@@ -1,0 +1,28 @@
+[Unit]
+Description=PortForwardGo Panel Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Restart=always
+RestartSec=20s
+LimitCPU=infinity
+LimitFSIZE=infinity
+LimitDATA=infinity
+LimitSTACK=infinity
+LimitCORE=infinity
+LimitRSS=infinity
+LimitNOFILE=infinity
+LimitAS=infinity
+LimitNPROC=infinity
+LimitMEMLOCKS=infinity
+LimitSIGPENDING=infinity
+LimitMSGQUEUE=infinity
+LimitRPTRIO=infinity
+LimitRTTIME=infinity
+WorkingDirectory={dir}
+ExecStart={dir}/PortForwardGoPanel --config panel.json
+
+[Install]
+WantedBy=multi-user.target

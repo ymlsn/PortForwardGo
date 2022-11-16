@@ -1,0 +1,17 @@
+{
+    "Api": "{api}",
+    "License": "{license}",
+    "Secret": "{secret}",
+    "Proxy": "{proxy}",
+    "Speed": 0,
+    "ListenIP": "{listen}",
+    "OutBounds": null,
+    "DisableUDP": false,
+    "DisableTFO": true,
+    "DisableExec": false,
+    "DNS": [
+        "119.29.29.29",
+        "8.8.8.8"
+    ],
+    "FirewallLog": "/data/firewall.log"
+}

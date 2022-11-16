@@ -1,0 +1,17 @@
+{
+    "Web": {
+        "Type": "unix",
+        "Listen": "/var/run/pf.socket"
+    },
+    "Database": {
+        "Type": "mysql",
+        "MySQL": {
+            "Host": "{DB_HOST}",
+            "Port": 3306,
+            "User": "{DB_USER}",
+            "Password": "{DB_PASS}",
+            "Name": "{DB_NAME}"
+        }
+    },
+    "Proxy": ""
+}

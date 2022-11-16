@@ -1,0 +1,19 @@
+{
+    "Web": {
+        "Type": "tcp",
+        "Listen": ":80",
+        "Cert": "",
+        "Key": ""
+    },
+    "Database": {
+        "Type": "mysql",
+        "MySQL": {
+            "Host": "127.0.0.1",
+            "Port": 3306,
+            "User": "root",
+            "Password": "",
+            "Name": "portforward"
+        }
+    },
+    "Proxy": ""
+}

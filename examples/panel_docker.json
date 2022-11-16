@@ -1,0 +1,13 @@
+{
+    "Web": {
+        "Type": "unix",
+        "Listen": "/data/web.socket"
+    },
+    "Database": {
+        "Type": "sqlite3",
+        "SQLite3": {
+            "File": "/data/sqlite.db"
+        }
+    },
+    "Proxy": ""
+}
