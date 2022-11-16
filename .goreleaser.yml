@@ -1,0 +1,582 @@
+project_name: PortForwardGo
+release:
+  gitlab:
+    owner: CoiaPrant
+    name: PortForwardGo
+  mode: replace
+
+before:
+  hooks:
+    - go mod tidy -v
+builds:
+  - id: PortForwardGoPanel
+    main: ./cmd/PortForwardGoPanel
+    binary: PortForwardGoPanel
+    asmflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+      - freebsd
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+      - s390x
+      - riscv64
+    goarm:
+      - 7
+    ignore:
+      - goos: windows
+        goarch: 386
+      - goos: windows
+        goarch: arm
+      - goos: windows
+        goarch: arm64
+
+  - id: PortForwardGo
+    main: ./cmd/PortForwardGo
+    binary: PortForwardGo
+    asmflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+      - freebsd
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+      - mips
+      - mips64
+      - mipsle
+      - mips64le
+      - s390x
+      - riscv64
+    goamd64:
+      - v1
+      - v2
+      - v3
+      - v4
+    goarm:
+      - 7
+    gomips:
+      - hardfloat
+      - softfloat
+
+  - id: SecureTunnel
+    main: ./cmd/SecureTunnel
+    binary: SecureTunnel
+    asmflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+      - freebsd
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+      - mips
+      - mips64
+      - mipsle
+      - mips64le
+      - s390x
+      - riscv64
+    goamd64:
+      - v1
+      - v2
+      - v3
+      - v4
+    goarm:
+      - 7
+    gomips:
+      - hardfloat
+      - softfloat
+
+  - id: RClient
+    main: ./cmd/RClient
+    binary: RClient
+    asmflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+      - freebsd
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+      - mips
+      - mips64
+      - mipsle
+      - mips64le
+      - s390x
+      - riscv64
+    goamd64:
+      - v1
+      - v2
+      - v3
+      - v4
+    goarm:
+      - 7
+    gomips:
+      - hardfloat
+      - softfloat
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    ids:
+      - PortForwardGoPanel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}-amd64"
+    dockerfile: "docker/PortForwardGoPanel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGoPanel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - install
+      - resources
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: arm64
+    ids:
+      - PortForwardGoPanel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}-arm64"
+    dockerfile: "docker/PortForwardGoPanel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGoPanel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/arm64/v8"
+      - "--platform=linux/arm64/v8"
+    extra_files:
+      - install
+      - resources
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v1
+    ids:
+      - PortForwardGo
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64"
+    dockerfile: "docker/PortForwardGo"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGo"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v2
+    ids:
+      - PortForwardGo
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v2"
+    dockerfile: "docker/PortForwardGo"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGo"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v2"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v3
+    ids:
+      - PortForwardGo
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v3"
+    dockerfile: "docker/PortForwardGo"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGo"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v3"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v4
+    ids:
+      - PortForwardGo
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v4"
+    dockerfile: "docker/PortForwardGo"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGo"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v4"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: arm64
+    ids:
+      - PortForwardGo
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-arm64"
+    dockerfile: "docker/PortForwardGo"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=PortForwardGo"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/arm64/v8"
+      - "--platform=linux/arm64/v8"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v1
+    ids:
+      - SecureTunnel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64"
+    dockerfile: "docker/SecureTunnel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=SecureTunnel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v2
+    ids:
+      - SecureTunnel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v2"
+    dockerfile: "docker/SecureTunnel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=SecureTunnel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v2"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v3
+    ids:
+      - SecureTunnel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v3"
+    dockerfile: "docker/SecureTunnel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=SecureTunnel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v3"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v4
+    ids:
+      - SecureTunnel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v4"
+    dockerfile: "docker/SecureTunnel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=SecureTunnel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v4"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: arm64
+    ids:
+      - SecureTunnel
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-arm64"
+    dockerfile: "docker/SecureTunnel"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=SecureTunnel"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/arm64/v8"
+      - "--platform=linux/arm64/v8"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v1
+    ids:
+      - RClient
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64"
+    dockerfile: "docker/RClient"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=RClient"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v2
+    ids:
+      - RClient
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v2"
+    dockerfile: "docker/RClient"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=RClient"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v2"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v3
+    ids:
+      - RClient
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v3"
+    dockerfile: "docker/RClient"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=RClient"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v3"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: amd64
+    goamd64: v4
+    ids:
+      - RClient
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v4"
+    dockerfile: "docker/RClient"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=RClient"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/amd64"
+      - "--platform=linux/amd64/v4"
+    extra_files:
+      - docker/entrypoint.sh
+  - goos: linux
+    goarch: arm64
+    ids:
+      - RClient
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-arm64"
+    dockerfile: "docker/RClient"
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title=RClient"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=platform=linux/arm64/v8"
+      - "--platform=linux/arm64/v8"
+    extra_files:
+      - docker/entrypoint.sh
+
+docker_manifests:
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:latest"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgopanel:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v2"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v3"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v4"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:latest"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v2"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v3"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-amd64v4"
+      - "registry.gitlab.com/coiaprant/portforwardgo/portforwardgo:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v2"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v3"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v4"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:latest"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v2"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v3"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-amd64v4"
+      - "registry.gitlab.com/coiaprant/portforwardgo/securetunnel:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v2"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v3"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v4"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-arm64"
+  - name_template: "registry.gitlab.com/coiaprant/portforwardgo/rclient:latest"
+    image_templates:
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v2"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v3"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-amd64v4"
+      - "registry.gitlab.com/coiaprant/portforwardgo/rclient:{{ .Tag }}-arm64"
+
+archives:
+  - id: PortForwardGoPanel
+    builds:
+      - PortForwardGoPanel
+    format: tar.gz
+    strip_parent_binary_folder: true
+    name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+      - systemd/PortForwardGoPanel.service
+      - resources/*
+      - install/*
+      - examples/*
+
+  - id: PortForwardGo
+    builds:
+      - PortForwardGo
+    format: tar.gz
+    strip_parent_binary_folder: true
+    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ .Amd64 }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+      - systemd/PortForwardGo.service
+      - examples/*
+
+  - id: SecureTunnel
+    builds:
+      - SecureTunnel
+    format: tar.gz
+    strip_parent_binary_folder: true
+    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ .Amd64 }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+      - systemd/SecureTunnel.service
+
+  - id: RClient
+    builds:
+      - RClient
+    format: tar.gz
+    strip_parent_binary_folder: true
+    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ .Amd64 }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+      - systemd/RClient.service
+
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}"
